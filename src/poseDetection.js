@@ -24,7 +24,7 @@ export let poseDetection = (video, net) => {
     minPoseConfidence = 0.1;
     minPartConfidence = 0.5;
 
-    console.log(pose.keypoints[0].position);
+    console.log(pose.keypoints[0].position.y);
 
     ctx.clearRect(0, 0, videoWidth, videoHeight);
     ctx.save();

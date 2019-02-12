@@ -38,3 +38,8 @@ export let drawKeypoints = (keypoints, minConfidence, ctx, scale = 1) => {
     drawPoint(ctx, y * scale, x * scale, 3, color);
   }
 }
+
+export let drawLabel = (text, ctx) => {
+  ctx.font = "30px Arial";
+  ctx.fillText(text, 50, 50);
+}

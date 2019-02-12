@@ -13942,7 +13942,10 @@ let poseDetection = (video, net) => {
     minPoseConfidence = 0.1;
     minPartConfidence = 0.5;
 
-    console.log(pose.keypoints[0].position.y);
+    var nosePoint = pose.keypoints[0].position.y;
+
+    console.log(nosePoint);
+
 
     ctx.clearRect(0, 0, videoWidth, videoHeight);
     ctx.save();
@@ -13955,6 +13958,12 @@ let poseDetection = (video, net) => {
       if(score >= minPoseConfidence){
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__draw__["a" /* drawKeypoints */])(keypoints, minPartConfidence, ctx);
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__draw__["b" /* drawSkeleton */])(keypoints, minPartConfidence, ctx);
+        if(nosePoint <= 200) {
+          __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__draw__["c" /* drawLabel */])("STANDING", ctx);
+        }
+        else {
+          __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__draw__["c" /* drawLabel */])("SITTING", ctx);
+        }
       }
     });
     requestAnimationFrame(poseDetectionFrame);
@@ -23540,6 +23549,7 @@ bindpage();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tensorflow_tfjs__ = __webpack_require__(38);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return drawSkeleton; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return drawKeypoints; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return drawLabel; });
 
 
 
@@ -23579,6 +23589,11 @@ let drawKeypoints = (keypoints, minConfidence, ctx, scale = 1) => {
     const {y, x} = keypoint.position;
     drawPoint(ctx, y * scale, x * scale, 3, color);
   }
+}
+
+let drawLabel = (text, ctx) => {
+  ctx.font = "30px Arial";
+  ctx.fillText(text, 50, 50);
 }
 
 

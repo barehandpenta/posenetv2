@@ -1,4 +1,4 @@
-import {drawSkeleton, drawKeypoints} from './draw'
+import {drawSkeleton, drawKeypoints, drawLabel} from './draw'
 
 export let poseDetection = (video, net) => {
   const videoWidth = video.width;
@@ -24,7 +24,10 @@ export let poseDetection = (video, net) => {
     minPoseConfidence = 0.1;
     minPartConfidence = 0.5;
 
-    console.log(pose.keypoints[0].position.y);
+    var nosePoint = pose.keypoints[0].position.y;
+
+    console.log(nosePoint);
+
 
     ctx.clearRect(0, 0, videoWidth, videoHeight);
     ctx.save();
@@ -37,6 +40,12 @@ export let poseDetection = (video, net) => {
       if(score >= minPoseConfidence){
         drawKeypoints(keypoints, minPartConfidence, ctx);
         drawSkeleton(keypoints, minPartConfidence, ctx);
+        if(nosePoint <= 200) {
+          drawLabel("STANDING", ctx);
+        }
+        else {
+          drawLabel("SITTING", ctx);
+        }
       }
     });
     requestAnimationFrame(poseDetectionFrame);
